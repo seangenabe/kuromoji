@@ -17,7 +17,6 @@
 
 "use strict";
 
-var zlib = require("zlibjs/bin/gunzip.min.js");
 var DictionaryLoader = require("./DictionaryLoader");
 
 /**
@@ -32,7 +31,9 @@ function BrowserDictionaryLoader(options) {
 BrowserDictionaryLoader.prototype = Object.create(DictionaryLoader.prototype);
 
 /**
- * Utility function to load gzipped dictionary
+ * Utility function to load dictionary.
+ * Use gzip, or brotli compression may be used. Make sure `Content-Encoding`
+ * is set and the browser will decompress automatically.
  * @param {string} url Dictionary URL
  * @param {BrowserDictionaryLoader~onLoad} callback Callback function
  */
@@ -46,11 +47,7 @@ BrowserDictionaryLoader.prototype.loadArrayBuffer = function (url, callback) {
             callback(xhr.statusText, null);
             return;
         }
-        var arraybuffer = this.response;
-
-        var gz = new zlib.Zlib.Gunzip(new Uint8Array(arraybuffer));
-        var typed_array = gz.decompress();
-        callback(null, typed_array.buffer);
+        callback(null, new Uint8Array(this.response).buffer);
     };
     xhr.onerror = function (err) {
         callback(err, null);
