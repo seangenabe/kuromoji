@@ -12,7 +12,6 @@ const mocha = require("gulp-mocha");
 const istanbul = require("gulp-istanbul");
 const webserver = require('gulp-webserver');
 const jsdoc = require("gulp-jsdoc3");
-const bower = require('gulp-bower');
 const ghPages = require('gulp-gh-pages-will');
 const bump = require('gulp-bump');
 const argv = require('minimist')(process.argv.slice(2));
@@ -187,7 +186,7 @@ gulp.task("copy-demo", [ "clean-demo", "build" ], () => {
 });
 
 gulp.task("build-demo", [ "copy-demo" ], () => {
-    return bower({ cwd: 'publish/demo/' });
+
 });
 
 gulp.task("webserver", [ "build-demo", "jsdoc" ], () => {
@@ -215,7 +214,7 @@ gulp.task("version", function () {
     if (argv['prerelease']) {
         type = 'prerelease';
     }
-    return gulp.src([ './bower.json', './package.json' ])
+    return gulp.src([ './package.json' ])
         .pipe(bump({ type: type }))
         .pipe(gulp.dest('./'));
 });

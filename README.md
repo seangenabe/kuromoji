@@ -59,16 +59,6 @@ You can prepare tokenizer like this:
 
 You only need the build/kuromoji.js and dict/*.dat files
 
-Install with Bower package manager:
-
-    bower install kuromoji
-
-Or you can use the kuromoji.js file and dictionary files from the GitHub repository.
-
-In your HTML:
-
-    <script src="url/to/kuromoji.js"></script>
-
 In your JavaScript:
 
     kuromoji.loader({ dic_path: "/url/to/dictionary/dir/" }).load(function (err, tokenizer) {
